@@ -39,5 +39,10 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 print("Connecting to broker...")
-client.connect("localhost", 1883)
+client.tls_set(
+    ca_certs="../project 5/certs/ca.pem",
+    certfile="../project 5/certs/device-001.pem",
+    keyfile="../project 5/certs/device-001-key.pem"
+)
+client.connect("localhost", 8883)
 client.loop_forever()

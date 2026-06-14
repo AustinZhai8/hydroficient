@@ -5,7 +5,7 @@ import time
 from datetime import datetime, timezone
 
 class WaterSensorMQTT:
-    def __init__(self, device_id, location, broker="localhost", port=1883):
+    def __init__(self, device_id, location, broker="localhost", port=8883):
         self.device_id = device_id
         self.location = location
         self.counter = 0
@@ -14,6 +14,11 @@ class WaterSensorMQTT:
         self.base_flow = 40
 
         self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+        self.client.tls_set(
+            ca_certs="../project 5/certs/ca.pem",
+            certfile="../project 5/certs/device-001.pem",
+            keyfile="../project 5/certs/device-001-key.pem"
+        )
         self.client.connect(broker, port)
         self.client.loop_start()
 
